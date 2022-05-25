@@ -1,6 +1,6 @@
 const express = require('express')
 const groupMemberControllers = require('../controllers/groupMemberControllers')
-// const checkAuthMiddleware = require('../middleware/checkAuth')
+const checkAut = require('../middleWare/checkAuth')
 
 const router = express.Router()
 

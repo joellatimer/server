@@ -54,8 +54,7 @@ function showAll(req, res){
 function showOne(req, res){
     const params = [req.params.id]
     console.log(params)
-    db.get(`SELECT * FROM members WHERE groupId = ?`, [params],
-    (err, row) => {
+    db.get(`SELECT * FROM members WHERE id = ?`, [params], (err, row) => {
         if(err){
             res.status(400).json({
                 "error":err.message

@@ -7,7 +7,7 @@ const groupRoutes = require('./routes/groupRoutes')
 const memberRoutes = require('./routes/memberRoutes')
 const meetingRoutes = require('./routes/meetingRoutes')
 const groupMemberRoutes = require('./routes/groupMemberRoutes')
-const attendRoutes = require('./routes/attendRoutes')
+const attendsRoutes = require('./routes/attendsRoutes')
 
 app.use(cors())
 app.use(morgan('dev'))
@@ -21,7 +21,7 @@ app.use('/groups', groupRoutes)
 app.use('/members', memberRoutes)
 app.use('/groupMembers', groupMemberRoutes)
 app.use('/meetings',meetingRoutes)
-app.use('/attends',attendRoutes)
+app.use('/attends',attendsRoutes)
 
 
 

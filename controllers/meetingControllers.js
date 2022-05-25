@@ -35,7 +35,7 @@ function save(req, res){
         })
     })
    
-   db.run(`INSERT INTO Attends(name,meetingId)  SELECT members.name, meetings.id FROM meetings LEFT OUTER JOIN members ON meetings.groupId = members.groupid WHERE meetings.id = (Select id FROM meetings WHERE id = (SELECT max(id) FROM meetings))`)
+   db.run(`INSERT INTO Attends(firstName, lastName, meetingId)  SELECT members.firstName, members.lastName, meetings.id FROM meetings LEFT OUTER JOIN members ON meetings.groupId = members.groupid WHERE meetings.id = (Select id FROM meetings WHERE id = (SELECT max(id) FROM meetings))`)
 }
 
 function showAll(req, res){

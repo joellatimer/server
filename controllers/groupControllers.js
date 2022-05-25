@@ -28,6 +28,7 @@ function register(req, res) {
     
 // TODO setup jwt expirations
 
+
 function login(req, res){
     const query = `SELECT * FROM groups WHERE groupName = ?`
     db.get(query, [req.body.groupName], (err, rows) => {
@@ -35,8 +36,8 @@ function login(req, res){
                 res.status(401).json({
                     message:"Invalid credentials"
                 })
-            }else{
-                const groupId = rows.id
+            } else 
+            { groupId = rows.id
                 bcryptjs.compare(
                     req.body.password, 
                     rows.password, 
@@ -44,14 +45,14 @@ function login(req, res){
                         if(rows){
                             const token = jwt.sign({
                                 groupName: req.body.groupName,
-                                groupId:req.body.id,
                                 exp:Math.floor(Date.now()/1000)+(60*60*24)
                                 },'process.env.SECRET',
-                                    function(err, token){
+                                    function(err, token,rows){
                                         res.status(200).json({
                                             message: "Authentication successful",
                                             token:token,
-                                            groupId:groupId
+                                            groupName: req.body.groupName,
+                                            id: groupId
                                             
                                         })
                                     }
@@ -63,7 +64,7 @@ function login(req, res){
                         }
                     }    
                 )
-            }
+             }
         }
     )   
         
@@ -85,20 +86,21 @@ function changePassword(req, res){
     const salt = bcryptjs.genSaltSync(10)
     const hash = bcryptjs.hashSync(req.body.password, salt)
     const updatedPassword = hash
+    
   
 
     const schema = {
         password:{type:"string", optional: false,  max:"100"},
     }
    
-    const v = new Validator()
-    const validationResponse = v.validate(updatedPassword, schema)
-    if(validationResponse !== true){
-        return res.status(400).json({
-            message:"Validation failed",
-            errors: validationResponse
-        })
-    }
+    // const v = new Validator()
+    // const validationResponse = v.validate(updatedPassword, schema)
+    // if(validationResponse !== true){
+    //     return res.status(400).json({
+    //         message:"Validation failed",
+    //         errors: validationResponse
+    //     })
+    // }
 
     db.run
     (
@@ -116,6 +118,23 @@ function changePassword(req, res){
             })
         }
     )
+}
+
+function showOne(req, res){
+    const params = [req.params.id]
+    console.log(params)
+    db.get(`SELECT groups.groupName FROM groups WHERE id = ?`, [params],
+    (err, row) => {
+        if(err){
+            res.status(400).json({
+                "error":err.message
+            })
+            return
+        }
+        res.status(200).json({row})
+        
+           
+    })
 }
 
 function destroy(req, res){
@@ -136,6 +155,7 @@ module.exports = {
     login:login,
     destroy:destroy,
     showAll:showAll,
+    showOne: showOne,
     changePassword:changePassword
 
 }

@@ -6,8 +6,8 @@ const router = express.Router()
 
 router
     .post('/', memberControllers.save)
-    .get('/:groupId',  memberControllers.showOne)
-    .get('/', memberControllers.showAll)
+    .get('/:id', memberControllers.showOne)
+    .get('/',  memberControllers.showAll)
     .patch('/:id',   memberControllers.update)
     .delete('/:id', memberControllers.destroy)
  

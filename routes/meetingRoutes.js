@@ -1,6 +1,6 @@
 const express = require('express')
 const meetingControllers = require('../controllers/meetingControllers')
-const checkAuthMiddleware = require('../middleware/checkAuth')
+const checkAuth = require('../middleWare/checkAuth')
 
 const router = express.Router()
 
