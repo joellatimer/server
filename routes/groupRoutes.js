@@ -8,7 +8,7 @@ router
   .get('/:id', groupControllers.showOne)
   .post('/login', groupControllers.login)
   .delete('/:id', groupControllers.destroy)
-  .get('/', checkAuth.auth, groupControllers.showAll)
+  .get('/', groupControllers.showAll)
   .patch('/:id', groupControllers.changePassword)
 
 module.exports = router

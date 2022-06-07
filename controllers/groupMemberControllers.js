@@ -4,7 +4,7 @@ const db = require('../database')
 
 
 function showGroupMembers(req, res){
-    db.all(`SELECT * FROM members  WHERE groupId  = ?`, 
+    db.all(`SELECT * FROM members  WHERE groupId = ? ORDER BY lastName, firstName`, 
     req.params.groupId, 
     function (err, members) {
         if(err){
