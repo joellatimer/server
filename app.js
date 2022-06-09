@@ -12,7 +12,7 @@ const attendsRoutes = require('./routes/attendsRoutes')
 
 app.use(
     cors({ 
-        origin: "*"
+       origin: "http://162.243.173.105:81",
     })
 )
 
