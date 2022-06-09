@@ -13,7 +13,10 @@ const attendsRoutes = require('./routes/attendsRoutes')
 app.use(
     cors({
         origin: "http://162.243.173.105:81",
-    }))
+        methods: ['GET', 'POST', 'DELETE', 'PATCH', 'PUT'],
+        
+    })    
+)        
 
 app.use(morgan('dev'))
 
