@@ -12,25 +12,14 @@ const req = require('express/lib/request')
 const res = require('express/lib/response')
 
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*'),
-    res.header('Access-Control-Allow-Headers', '*')
 
-    
-    if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET')
-    return res.status(200).json({})
-    }
-    next();
-})
-  
     
         
  
-
+app.use(cors())
 app.use(morgan('dev'))
 
-app.use(express.urlencoded())
+app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
 
@@ -42,8 +31,13 @@ app.use('/meetings',meetingRoutes)
 app.use('/attends',attendsRoutes)
 
 
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static(__dirname + '/public'))
+    app.get(/.*/, (req, res) => res.sendFile(__dirname + 'public/index.html'))
+}
 
 
 
 
-module.exports 
+
+module.exports = app
